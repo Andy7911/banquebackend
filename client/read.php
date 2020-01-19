@@ -27,7 +27,7 @@ if($num>0){
     $client_des=array(
         "id"=> $id,
         "nom"=>$nom,
-        "lastName"=>$lastName,
+        "lastname"=>$lastname,
         "age"=> $age,
         "solde"=>$solde,
         "credit"=> $credit
