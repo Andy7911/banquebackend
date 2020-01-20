@@ -16,6 +16,28 @@ include_once '../object/clients.php';
 
 $database = new Database();
 $db= $database->getConnection();
+$client = new client($db);
+
+$clasa = $_GET;
+// get posted data
+$data=(object)($clasa);
+if($_SERVER['REQUEST_METHOD']==='POST' && empty($_POST)){
+$data = json_decode(file_get_contents("php://input"));
+}
+$client->id=$data->id;
+if($client->delete()){
+
+http_response_code(200);
+
+echo json_encode(array("message" => "client was deleted."));
+
+
+}
+else{
+
+    http_response_code(503);
+    echo json_encode(array("message" => "Unable deleted."));
+}
 
 
 

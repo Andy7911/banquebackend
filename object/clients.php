@@ -50,11 +50,11 @@ function read(){
      return $stmt;
 }
 function delete(){
-$query = "DELETE * FROM clients Where id=? ";
+$query = "DELETE FROM clients Where id = ?";
 $stmt=$this->conn->prepare($query);
 $this->id=htmlspecialchars(strip_tags($this->id));
 
-$stmt->bindParam(1,$this->id);
+$stmt->bindParam(1,$this->id, PDO::PARAM_INT);
 
 if($stmt->execute()){
 
