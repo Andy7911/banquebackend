@@ -49,6 +49,24 @@ function read(){
     $stmt->execute();
      return $stmt;
 }
+function read_one(){
+
+$query ="SELECT * FROM clients where id = ?";
+$stmt = $this->conn->prepare($query);
+$this->nom=htmlspecialchars(strip_tags($this->nom));
+$stmt->bindParam(1,$this->id);
+
+$stmt->execute();
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$this->nom=$row['nom'];
+$this->lastname=$row['lastname'];
+$this->solde=$row['solde'];
+$this->credit=$row['credit'];
+$this->age=$row['age'];
+ return $stmt;
+
+
+}
 function delete(){
 $query = "DELETE FROM clients Where id = ?";
 $stmt=$this->conn->prepare($query);
