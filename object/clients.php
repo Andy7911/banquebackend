@@ -4,12 +4,12 @@ class client {
 
     private $conn;
     private $table_name="clients";
-    public $id;
-    public $nom;
-    public $lastname;
-    public $age;
-    public $solde;
-    public $credit;
+    public  $id;
+    public  $nom;
+    public  $lastname;
+    public  $age;
+    public  $solde;
+    public  $credit;
 
 public function __construct($db){
     $this->conn= $db;
@@ -49,6 +49,24 @@ function read(){
     $stmt->execute();
      return $stmt;
 }
+function read_one(){
+
+$query ="SELECT * FROM clients where id = ?";
+$stmt = $this->conn->prepare($query);
+$this->nom=htmlspecialchars(strip_tags($this->nom));
+$stmt->bindParam(1,$this->id);
+
+$stmt->execute();
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$this->nom=$row['nom'];
+$this->lastname=$row['lastname'];
+$this->solde=$row['solde'];
+$this->credit=$row['credit'];
+$this->age=$row['age'];
+ return $stmt;
+
+
+}
 function delete(){
 $query = "DELETE FROM clients Where id = ?";
 $stmt=$this->conn->prepare($query);
@@ -62,7 +80,36 @@ if($stmt->execute()){
 }
 return false;
 }
+function Update(){
 
+$query= "Update 
+clients SET 
+nom= :nom, lastname= :lastname, 
+age= :age,
+solde=:solde, 
+credit= :credit 
+Where id = :id";
+ $stmt= $this->conn->prepare($query);
+ $this->id=htmlspecialchars(strip_tags($this->id));
+ $this->nom=htmlspecialchars(strip_tags($this->nom));
+ $this->age=htmlspecialchars(strip_tags($this->age));
+ $this->solde=htmlspecialchars(strip_tags($this->solde));
+ $this->credit=htmlspecialchars(strip_tags($this->credit));
+
+ $stmt->bindParam(":id",$this->id);
+ $stmt->bindParam(":nom",$this->nom);
+ $stmt->bindParam(":lastname",$this->lastname);
+ $stmt->bindParam(":age",$this->age);
+ $stmt->bindParam(":credit",$this->credit);
+ $stmt->bindParam(":solde",$this->solde);
+
+if($stmt->execute()){
+
+    return true;
+}
+return false;
+
+}
 
 } 
 ?>
