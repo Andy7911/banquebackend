@@ -49,6 +49,21 @@ function read(){
     $stmt->execute();
      return $stmt;
 }
+function findClientByUserId($index){
+    $query = "select nom,lastname,age,solde,credit from clients inner JOIN user on user.id = clients.userId where user.id = ?
+    ";
+    $stml =$this->conn->prepare($query);
+    $stml->bindParam(1,$index);
+    $stml->execute();
+    $row= $stml->fetch(PDO::FETCH_ASSOC);
+    $this->nom=$row['nom'];
+    $this->lastname=$row['lastname'];
+    $this->solde=$row['solde'];
+    $this->credit=$row['credit'];
+    $this->age=$row['age'];
+    return $stml;
+    
+    }
 function read_one(){
 
 $query ="SELECT * FROM clients where id = ?";
